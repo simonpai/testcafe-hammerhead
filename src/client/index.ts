@@ -28,6 +28,8 @@ import INTERNAL_PROPS from '../processing/dom/internal-properties';
 import PageNavigationWatch from './page-navigation-watch';
 import domProcessor from './dom-processor';
 
+import './shim';
+
 class Hammerhead {
     win: Window;
     sandbox: Sandbox;
