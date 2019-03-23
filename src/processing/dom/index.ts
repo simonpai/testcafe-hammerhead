@@ -540,6 +540,29 @@ export default class DomProcessor {
     }
 
     _processUrlAttrs (el: HTMLElement, urlReplacer, pattern: ElementProcessingPattern): void {
+        switch (pattern.urlAttr) {
+            case 'src':
+                switch (el.tagName) {
+                    case 'script':
+                    case 'frame':
+                        break;
+                    case 'iframe':
+                        // nullify iframe
+                        // urlReplacer = emptyUrlReplacer;
+                        break;
+                    default:
+                        // console.log('Skip src on ' + el.tagName, el.attrs);
+                        return; // skip src url on element other than script/iframe
+                }
+                break;
+            case 'href':
+                switch (el.tagName) {
+                    case 'link':
+                        // console.log('Skip href on ' + el.tagName, el.attrs);
+                        return; // skip link href
+                }
+        }
+
         if (urlReplacer && pattern.urlAttr) {
             const storedUrlAttr     = DomProcessor.getStoredAttrName(pattern.urlAttr);
             let resourceUrl         = this.adapter.getAttr(el, pattern.urlAttr);
@@ -577,6 +600,11 @@ export default class DomProcessor {
 
                         // NOTE: Cross-domain iframe.
                         if (!this.adapter.sameOriginCheck(destUrl, resourceUrl)) {
+                            this.adapter.setAttr(el, pattern.urlAttr, '');
+                            return;
+                        }
+                        /*
+                        if (!this.adapter.sameOriginCheck(destUrl, resourceUrl)) {
                             const proxyHostname      = urlUtils.parseUrl(location).hostname;
                             const proxyPort          = this.adapter.getCrossDomainPort();
                             const iframeResourceType = urlUtils.getResourceTypeString({ isIframe: true });
@@ -589,6 +617,7 @@ export default class DomProcessor {
                                 resourceType: iframeResourceType
                             }) : '';
                         }
+                        */
 
                     }
 

@@ -18,7 +18,7 @@ import { parse as parseUrl } from 'url';
 import Cookies from './cookies';
 import UploadStorage from '../upload/storage';
 import COMMAND from './command';
-import generateUniqueId from '../utils/generate-unique-id';
+// import generateUniqueId from '../utils/generate-unique-id';
 
 const TASK_TEMPLATE: string = read('../client/task.js.mustache');
 
@@ -58,7 +58,7 @@ interface TaskScriptOpts {
 export default abstract class Session extends EventEmitter {
     uploadStorage: UploadStorage;
     requireStateSwitch: boolean = false;
-    id: string = generateUniqueId();
+    id: string = 'sandbox'; //generateUniqueId();
     cookies: Cookies = new Cookies();
     proxy: Proxy = null;
     externalProxySettings: ExternalProxySettings | null = null;

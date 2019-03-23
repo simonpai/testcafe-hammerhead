@@ -97,6 +97,14 @@ export default class Proxy extends Router {
             contentType: 'application/x-javascript',
             content:     hammerheadScriptContent
         });
+        this.GET('/sandbox!s!utf-8/https://www.googletagservices.com/tag/js/gpt.js', {
+            contentType: 'application/x-javascript',
+            content:     ''
+        });
+        this.GET('/sandbox!s!utf-8/https://connect.facebook.net/zh_TW/sdk.js', {
+            contentType: 'application/x-javascript',
+            content:     ''
+        });
 
         this.POST('/messaging', (req: http.IncomingMessage, res: http.ServerResponse, serverInfo: ServerInfo) => this._onServiceMessage(req, res, serverInfo));
         this.GET('/task.js', (req: http.IncomingMessage, res: http.ServerResponse, serverInfo: ServerInfo) => this._onTaskScriptRequest(req, res, serverInfo, false));
