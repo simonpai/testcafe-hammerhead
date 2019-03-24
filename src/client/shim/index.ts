@@ -2,6 +2,7 @@ import domProcessor from '../dom-processor';
 import * as domUtils from '../utils/dom';
 import nativeMethods from '../sandbox/native-methods';
 import ElementSandbox from '../sandbox/node/element';
+import IframeSandbox from '../sandbox/iframe';
 
 const setAttributeCore = ElementSandbox.prototype.setAttributeCore;
 
@@ -30,4 +31,12 @@ ElementSandbox.prototype.setAttributeCore = function (el, args, isNs?: boolean) 
     }
 
     return setAttributeCore.apply(this, arguments);
+};
+
+const processIframe = IframeSandbox.prototype.processIframe;
+
+IframeSandbox.prototype.processIframe = function (el) {
+    // console.log('[ElementSandbox] Nullify iframe src: ' + el.getAttribute('src')); // eslint-disable-line no-console
+    el.src = ''; // eslint-disable-line
+    processIframe.apply(this, arguments);
 };
